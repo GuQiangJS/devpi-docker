@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  devpi:
+    build: .
+    container_name: devpi_server
+    ports:
+      - "3141:3141"
+    volumes:
+      - ./data:/data
+      - ./config:/root/.devpi
+      - ./pip.conf:/root/.pip/pip.conf
+    environment:
+      # 设置 devpi-server 的配置选项
+      - DEVPISERVER_SERVERDIR=/data
+      - DEVPISERVER_PORT=3141
+      - DEVPISERVER_HOST=0.0.0.0
+      - DEVPISERVER_INDEX=main
+      - DEVPISERVER_ROOT_PASSWD=123456
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
